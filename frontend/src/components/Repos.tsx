@@ -1,8 +1,13 @@
 import Repo from "./Repo";
+import Spinner from "./Spinner";
 
-const Repos = ({ repos }: any) => {
+const Repos = ({ repos, allwaysFullWidth = false, repoLoading }: any) => {
   return (
-    <div className={`lg:w-2/3 w-full bg-glass rounded-lg px-8 py-6`}>
+    <div
+      className={`${
+        allwaysFullWidth ? "w-full" : "lg:w-2/3 w-full"
+      } bg-glass rounded-lg px-8 py-6`}
+    >
       <ol className="relative border-s border-gray-200">
         {repos?.map((repo: any, index: number) => (
           <Repo key={index} repo={repo} />
@@ -12,6 +17,7 @@ const Repos = ({ repos }: any) => {
             No Repos Found
           </p>
         )}
+        {repoLoading && <Spinner />}
       </ol>
     </div>
   );

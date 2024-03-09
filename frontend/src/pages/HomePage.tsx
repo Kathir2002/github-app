@@ -8,33 +8,26 @@ import axios from "axios";
 import Spinner from "../components/Spinner";
 
 const HomePage = () => {
-  const [userProfile, setUserProfile] = useState(null);
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [repos, setRepos] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [sortType, setSortType] = useState("recent");
+
   const getUserProfileAndRepos = useCallback(
     async (userName: string = "Kathir2002") => {
       setLoading(true);
       await axios
-        .get(`https://api.github.com/users/${userName}`, {
-          headers: {
-            Authorization: `token ${import.meta.env.VITE_GITHUB_API}`,
-          },
-        })
-        .then(async (userRes: any) => {
-          setUserProfile(userRes?.data);
-          await axios
-            .get(userRes?.data?.repos_url)
-            .then((reposRes: any) => {
-              setLoading(false);
-              setRepos(reposRes?.data);
-              return { userRes: userRes?.data, reposRes: reposRes?.data };
-            })
-            .catch((error) => {
-              setLoading(false);
-              toast.error(error.message);
-            });
+        .get(`http://localhost:5000/api/users/profile/${userName}`, {})
+        .then(async (res: any) => {
+          console.log(res);
+
+          setUserProfile(res?.data?.userProfile);
+          setLoading(false);
+          repos.sort(
+            (a: any, b: any) =>
+              new Date(b?.created_at) - new Date(a?.created_at)
+          );
+          setRepos(res?.data?.repos);
         })
         .catch((err) => {
           setLoading(false);
@@ -50,14 +43,11 @@ const HomePage = () => {
 
   const onSearch = async (event: any, userName: any) => {
     event.preventDefault();
-
     setLoading(true);
     setRepos([]);
     setUserProfile(null);
-    const { userRes, reposRes } = await getUserProfileAndRepos(userName);
-    setUserProfile(userRes);
-    setRepos(reposRes);
-    setLoading(false);
+    await getUserProfileAndRepos(userName);
+    setSortType("recent");
   };
 
   const onSort = (sortType: string) => {
