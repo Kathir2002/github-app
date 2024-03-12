@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "nodemon backend/server.ts",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "node backend/server.ts"
+    "start": "nodemon backend/server.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kathir Mathvan L",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.17",
