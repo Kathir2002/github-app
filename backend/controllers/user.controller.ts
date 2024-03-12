@@ -5,19 +5,20 @@ class user {
   async getUserProfileAndRepo(req: any, res: any) {
     try {
       const { userName } = req.params;
-      await axios
-        .get(`https://api.github.com/users/${userName}`, {
-          headers: {
-            Authorization: `token ${process.env.GITHUB_API}`,
-          },
-        })
-        .then(async (userRes) => {
-          await axios.get(userRes?.data?.repos_url).then((reposRes) => {
-            res
-              ?.status(200)
-              ?.json({ userProfile: userRes?.data, repos: reposRes?.data });
-          });
+      await fetch(`https://api.github.com/users/${userName}`, {
+        headers: {
+          Authorization: `token ${process.env.GITHUB_API}`,
+        },
+      }).then(async (userRes) => {
+        const userProfile = await userRes.json();
+
+        await fetch(userProfile?.repos_url).then(async (reposRes) => {
+          const reposData = await reposRes.json();
+          res
+            ?.status(200)
+            ?.json({ userProfile: userProfile, repos: reposData });
         });
+      });
     } catch (err: any) {
       res?.status(500)?.json({ message: err?.message });
     }
