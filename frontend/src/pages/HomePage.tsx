@@ -30,7 +30,9 @@ const HomePage = () => {
         })
         .catch((err) => {
           setLoading(false);
-          toast.error(err?.message);
+          console.log(err?.message);
+
+          toast.error("Something went wrong! Please try again later.");
         });
     },
     []
