@@ -19,14 +19,14 @@ const HomePage = () => {
       await axios
         .get(`/api/users/profile/${userName}`)
         .then(async (res: any) => {
-          setUserProfile(res?.data?.userProfile);
+          setUserProfile(res?.userProfile);
           setLoading(false);
-          res?.data?.repos.sort(
+          res?.repos.sort(
             (a: any, b: any) =>
               //@ts-ignore
               new Date(b?.created_at) - new Date(a?.created_at)
           );
-          setRepos(res?.data?.repos);
+          setRepos(res?.repos);
         })
         .catch((err) => {
           setLoading(false);
