@@ -11,8 +11,11 @@ class user {
         },
       }).then(async (userRes) => {
         const userProfile = await userRes.json();
-
-        await fetch(userProfile?.repos_url).then(async (reposRes) => {
+        await fetch(userProfile?.repos_url, {
+          headers: {
+            Authorization: `token ${process.env.GITHUB_API}`,
+          },
+        }).then(async (reposRes) => {
           const reposData = await reposRes.json();
           res
             ?.status(200)
