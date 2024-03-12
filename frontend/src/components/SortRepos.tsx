@@ -1,6 +1,4 @@
 const SortRepos = ({ sortType, onSort }: any) => {
-  console.log(sortType);
-
   const BUTTONS = [
     { type: "recent", text: "Most Recent" },
     { type: "stars", text: "Most Stars" },

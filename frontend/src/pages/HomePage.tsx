@@ -17,14 +17,13 @@ const HomePage = () => {
     async (userName: string = "Kathir2002") => {
       setLoading(true);
       await axios
-        .get(`http://localhost:5000/api/users/profile/${userName}`, {})
+        .get(`/api/users/profile/${userName}`)
         .then(async (res: any) => {
-          console.log(res);
-
           setUserProfile(res?.data?.userProfile);
           setLoading(false);
-          repos.sort(
+          res?.data?.repos.sort(
             (a: any, b: any) =>
+              //@ts-ignore
               new Date(b?.created_at) - new Date(a?.created_at)
           );
           setRepos(res?.data?.repos);
@@ -53,6 +52,7 @@ const HomePage = () => {
   const onSort = (sortType: string) => {
     if (sortType == "recent") {
       repos.sort(
+        //@ts-ignore
         (a: any, b: any) => new Date(b.created_at) - new Date(a.created_at)
       ); //descending order
     } else if (sortType == "stars") {

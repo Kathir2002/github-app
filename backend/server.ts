@@ -1,22 +1,45 @@
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
+import cors from "cors";
+import passport from "passport";
+import session from "express-session";
+import path from "path";
+
+import "./passport/github.auth.ts";
+
+import userRoutes from "./routes/user.route.ts";
+import exploreRoutes from "./routes/explore.route.ts";
+import authRoutes from "./routes/auth.route.ts";
+
+import { connectMongoDB } from "./db/connectMongoDB.ts";
+
 dotenv.config();
 
-import userRoute from "./routes/user.route.ts";
-import exploreRoute from "./routes/explore.route.ts";
-
 const app = express();
-app.use(express.json());
-app.use(cors());
+const PORT = process.env.PORT || 5000;
 
-app.get("/", async (req, res) => {
-  res.json({ message: "success!" });
+app.use(
+  session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
+);
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Here we can remove the cors, it's not necessary in production because the frontend and backend are on the same domain. I forgot to mention that in the video, sorry about that.🙄
+// app.use(cors());
+
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/explore", exploreRoutes);
+
+app.use(express.static(path.join(path.resolve(), "/frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(path.resolve(), "frontend", "dist", "index.html"));
 });
 
-app.use("/api/users", userRoute);
-app.use("/api/explore", exploreRoute);
-
-app.listen(5000, () => {
-  console.log("server running on localhost:5000");
+app.listen(PORT, () => {
+  console.log(`Server started on port:${PORT}`);
+  connectMongoDB();
 });
