@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { formatDate } from "../utils/function";
+import { apiUrlDB } from "../lib/functions";
 
 const LikesPage = () => {
   const [likes, setLikes] = useState([]);
   useEffect(() => {
     const getLikes = async () => {
       await axios
-        .get("/api/users/likes", { withCredentials: true })
+        .get(`${apiUrlDB}/api/users/likes`, { withCredentials: true })
         .then((res) => {
           setLikes(res.data?.likedBy);
         })

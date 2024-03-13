@@ -1,5 +1,3 @@
-import axios from "axios";
-
 class explore {
   async explorePopularRepos(req: any, res: any) {
     try {

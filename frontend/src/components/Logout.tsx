@@ -2,13 +2,14 @@ import axios from "axios";
 import { MdLogout } from "react-icons/md";
 import { useAuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
+import { apiUrlDB } from "../lib/functions";
 // TODO Implement Logout functionality
 
 const Logout = () => {
   const { authUser, setAuthUser }: any = useAuthContext();
   const handleLogout = async () => {
     await axios
-      .get("/api/auth/logout")
+      .get(`${apiUrlDB}/api/auth/logout`)
       .then((res) => {
         setAuthUser(null);
         toast.success(res?.data?.message);

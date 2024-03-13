@@ -1,3 +1,4 @@
+export const apiUrlDB = "https://github-app-api.onrender.com";
 export const handleLoginWithSignin = () => {
-  window.open("/api/auth/github", "_self");
+  window.open(`${apiUrlDB}/api/auth/github`, "_self");
 };

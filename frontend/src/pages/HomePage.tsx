@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Spinner from "../components/Spinner";
+import { apiUrlDB } from "../lib/functions";
 
 const HomePage = () => {
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -17,7 +18,7 @@ const HomePage = () => {
     async (userName: string = "Kathir2002") => {
       setLoading(true);
       await axios
-        .get(`/api/users/profile/${userName}`)
+        .get(`${apiUrlDB}/api/users/profile/${userName}`)
         .then(async (res: any) => {
           setUserProfile(res?.data?.userProfile);
           setLoading(false);

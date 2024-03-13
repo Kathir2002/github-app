@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import Repos from "../components/Repos";
+import { apiUrlDB } from "../lib/functions";
 
 const ExplorePage = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -30,7 +31,7 @@ const ExplorePage = () => {
     if (offset == 10) setLoading(true);
     if (limit > 0) setOffset(10);
     await axios
-      .get(`/api/explore/${language}/${limit > 0 ? limit : offset}`)
+      .get(`${apiUrlDB}/api/explore/${language}/${limit > 0 ? limit : offset}`)
       .then((res) => {
         setRepoLoading(false);
         setRepos(res?.data?.popularRepos);

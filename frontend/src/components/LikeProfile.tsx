@@ -2,6 +2,7 @@ import axios from "axios";
 import { FaHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../context/authContext";
+import { apiUrlDB } from "../lib/functions";
 
 const LikeProfile = ({ userProfile }: any) => {
   const { authUser }: any = useAuthContext();
@@ -11,7 +12,7 @@ const LikeProfile = ({ userProfile }: any) => {
     await axios
       .request({
         method: "POST",
-        url: `/api/users/like/${userProfile?.login}`,
+        url: `${apiUrlDB}/api/users/like/${userProfile?.login}`,
         headers: {
           "Content-Type": "application/json",
         },

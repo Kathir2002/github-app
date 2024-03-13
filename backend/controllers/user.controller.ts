@@ -1,4 +1,3 @@
-import axios from "axios";
 import UserModel from "../models/user.model";
 
 class user {
