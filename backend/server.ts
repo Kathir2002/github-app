@@ -2,8 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import passport from "passport";
 import session from "express-session";
-import path from "path";
-
+import cors from "cors";
 import "./passport/github.auth.ts";
 
 import userRoutes from "./routes/user.route.ts";
@@ -29,11 +28,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/explore", exploreRoutes);
 
-app.use(express.static(path.join(path.resolve(), "/frontend/dist")));
+// app.use(express.static(path.join(path.resolve(), "/frontend/dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(path.resolve(), "frontend", "dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(path.resolve(), "frontend", "dist", "index.html"));
+// });
 
 app.listen(PORT, () => {
   console.log(`Server started on port:${PORT}`);
