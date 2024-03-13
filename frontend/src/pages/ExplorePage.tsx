@@ -43,11 +43,10 @@ const ExplorePage = () => {
       });
   };
   const handleScroll = () => {
-    const { scrollHeight, scrollTop } = document.documentElement;
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     setRepoLoading(true);
     setTimeout(() => {
-      if (scrollTop + scrollHeight === scrollHeight) {
-        // if (scrollTop + clientHeight >= scrollHeight) {
+      if (scrollTop + clientHeight >= scrollHeight) {
         setOffset((pre) => {
           return pre + 10;
         });
