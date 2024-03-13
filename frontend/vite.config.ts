@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "https://github-app-mc2n.onrender.com",
+        target: "https://github-app-api.onrender.com",
       },
     },
   },
