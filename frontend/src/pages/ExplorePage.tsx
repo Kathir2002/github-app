@@ -46,7 +46,8 @@ const ExplorePage = () => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     setRepoLoading(true);
     setTimeout(() => {
-      if (scrollTop + clientHeight >= scrollHeight) {
+      if (scrollTop + scrollHeight === scrollHeight) {
+        // if (scrollTop + clientHeight >= scrollHeight) {
         setOffset((pre) => {
           return pre + 10;
         });
@@ -58,6 +59,7 @@ const ExplorePage = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <div className="px-4">
       <div className="bg-glass max-w-2xl mx-auto rounded-md p-4">
