@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { apiUrlDB } from "../lib/functions";
@@ -15,10 +14,10 @@ export const AuthContextProvider = ({ children }: any) => {
   useEffect(() => {
     const checkUserLoggedIn = async () => {
       setLoading(true);
-      await axios
-        .get(`${apiUrlDB}/api/auth/check`, { withCredentials: true })
-        .then((res) => {
-          setAuthUser(res?.data?.user);
+      await fetch(`${apiUrlDB}/api/auth/check`, { credentials: "include" })
+        .then(async (res) => {
+          const data = await res.json();
+          setAuthUser(data?.user);
           setLoading(false);
         })
         .catch((err) => {
