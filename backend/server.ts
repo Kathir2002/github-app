@@ -15,12 +15,13 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-app.use(
-  cors()
-  // origin: "https://github-app01.netlify.app",
-  // credentials: true,
-);
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+};
+// origin: "https://github-app01.netlify.app",
+// credentials: true,
+app.use(cors(corsOptions));
 
 app.use(
   session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
