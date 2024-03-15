@@ -1,7 +1,7 @@
 import passport from "passport";
 import dotenv from "dotenv";
 import { Strategy as GitHubStrategy } from "passport-github2";
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 
 dotenv.config();
 
@@ -22,17 +22,23 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-      callbackURL: `https://github-app-api.onrender.com/api/auth/github/callback`,
+      callbackURL:
+        "https://github-app-api.onrender.com/api/auth/github/callback",
     },
-    async (accessToken: any, refreshToken: any, profile: any, done: any) => {
-      const user = await User.findOne({ userName: profile?.username });
-      //signup
+    async function (
+      accessToken: any,
+      refreshToken: any,
+      profile: any,
+      done: any
+    ) {
+      const user = await User.findOne({ username: profile.username });
+      // signup
       if (!user) {
         const newUser = new User({
-          name: profile?.displayName,
-          userName: profile?.username,
-          profileUrl: profile?.profileUrl,
-          avatarUrl: profile?.photos[0]?.value,
+          name: profile.displayName,
+          username: profile.username,
+          profileUrl: profile.profileUrl,
+          avatarUrl: profile.photos[0].value,
           likedProfiles: [],
           likedBy: [],
         });
