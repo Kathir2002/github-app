@@ -14,12 +14,13 @@ router.get(
     failureRedirect: process.env.CLIENT_BASE_URL + "/login",
   }),
   function (req, res) {
-    console.log(res);
     res.redirect(process.env.CLIENT_BASE_URL as string);
   }
 );
 
 router.get("/check", (req, res) => {
+  console.log(req?.isAuthenticated(), "----------------");
+
   if (req.isAuthenticated()) {
     res.send({ user: req?.user });
   } else {
