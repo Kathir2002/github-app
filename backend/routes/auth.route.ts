@@ -14,6 +14,7 @@ router.get(
     failureRedirect: process.env.CLIENT_BASE_URL + "/login",
   }),
   function (req, res) {
+    console.log(res);
     res.redirect(process.env.CLIENT_BASE_URL as string);
   }
 );
