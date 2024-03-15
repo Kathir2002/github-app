@@ -6,7 +6,7 @@ import { apiUrlDB } from "../lib/functions";
 
 const LikeProfile = ({ userProfile }: any) => {
   const { authUser }: any = useAuthContext();
-  const isOwnProfile = authUser?.userName == userProfile?.login;
+  const isOwnProfile = authUser?.username == userProfile?.login;
 
   const handleLikeProfile = async () => {
     await axios

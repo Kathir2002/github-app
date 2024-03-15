@@ -3,8 +3,8 @@ import UserModel from "../models/user.model";
 class user {
   async getUserProfileAndRepo(req: any, res: any) {
     try {
-      const { userName } = req.params;
-      await fetch(`https://api.github.com/users/${userName}`, {
+      const { username } = req.params;
+      await fetch(`https://api.github.com/users/${username}`, {
         headers: {
           Authorization: `token ${process.env.GITHUB_API}`,
         },
@@ -31,21 +31,21 @@ class user {
       const { username } = req?.params;
 
       const user = await UserModel.findById(req.user._id.toString());
-      const userToLike = await UserModel.findOne({ userName: username });
+      const userToLike = await UserModel.findOne({ username: username });
       if (!userToLike) {
         return res?.status(404).json({ message: "No such user found" });
       }
-      if (user?.likedProfiles.includes(userToLike.userName)) {
+      if (user?.likedProfiles.includes(userToLike.username)) {
         return res
           ?.status(400)
           .json({ message: "You already liked this profile" });
       }
       userToLike.likedBy.push({
-        userName: user?.userName,
+        username: user?.username,
         avatarUrl: user?.avatarUrl,
         likedDate: Date.now(),
       });
-      user?.likedProfiles.push(userToLike.userName);
+      user?.likedProfiles.push(userToLike.username);
       await Promise.all([userToLike.save(), user?.save()]);
       res?.status(200).json({ message: "Liked successfully" });
     } catch (err: any) {

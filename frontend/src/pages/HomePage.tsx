@@ -7,18 +7,24 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 import { apiUrlDB } from "../lib/functions";
+import { useAuthContext } from "../context/authContext";
 
 const HomePage = () => {
   const [userProfile, setUserProfile] = useState<any>(null);
   const [repos, setRepos] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { authUser }: any = useAuthContext();
+  console.log(authUser);
+
   const [sortType, setSortType] = useState("recent");
 
   const getUserProfileAndRepos = useCallback(
-    async (userName: string = "Kathir2002") => {
+    async (
+      username: string = authUser?.username ? authUser?.username : "Kathir2002"
+    ) => {
       setLoading(true);
       await axios
-        .get(`${apiUrlDB}/api/users/profile/${userName}`)
+        .get(`${apiUrlDB}/api/users/profile/${username}`)
         .then(async (res: any) => {
           setUserProfile(res?.data?.userProfile);
           setLoading(false);
@@ -43,12 +49,12 @@ const HomePage = () => {
     getUserProfileAndRepos();
   }, [getUserProfileAndRepos]);
 
-  const onSearch = async (event: any, userName: any) => {
+  const onSearch = async (event: any, username: any) => {
     event.preventDefault();
     setLoading(true);
     setRepos([]);
     setUserProfile(null);
-    await getUserProfileAndRepos(userName);
+    await getUserProfileAndRepos(username);
     setSortType("recent");
   };
 

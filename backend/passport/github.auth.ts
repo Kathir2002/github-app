@@ -32,6 +32,7 @@ passport.use(
       done: any
     ) {
       const user = await User.findOne({ username: profile.username });
+
       // signup
       if (!user) {
         const newUser = new User({
