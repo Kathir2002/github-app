@@ -2,7 +2,7 @@
   "name": "github-clone",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "backend/server.ts",
   "scripts": {
     "dev": "nodemon server.ts",
     "start": "ts-node server.ts"
