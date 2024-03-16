@@ -23,7 +23,7 @@ passport.use(
       clientID: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
       callbackURL:
-        "https://github-app-api.onrender.com/api/auth/github/callback",
+        "https://long-ruby-cod-slip.cyclic.app/api/auth/github/callback",
     },
     async function (
       accessToken: any,
