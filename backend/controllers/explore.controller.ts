@@ -2,6 +2,8 @@ class explore {
   async explorePopularRepos(req: any, res: any) {
     try {
       const { language, offset } = req.params;
+      console.log(offset, language);
+
       await fetch(
         `https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc&per_page=${offset}`,
         {

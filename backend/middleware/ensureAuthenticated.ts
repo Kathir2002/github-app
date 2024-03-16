@@ -1,8 +1,7 @@
 export async function ensureAuthenticated(req: any, res: any, next: any) {
+  console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
     return next();
   }
-  res.res
-    .header("Access-Control-Allow-Origin", "*")
-    .redirect(process.env.CLIENT_BASE_URL + "/login");
+  res.redirect(process.env.CLIENT_BASE_URL + "/login");
 }

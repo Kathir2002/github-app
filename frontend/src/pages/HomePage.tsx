@@ -14,7 +14,6 @@ const HomePage = () => {
   const [repos, setRepos] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { authUser }: any = useAuthContext();
-  console.log(authUser);
 
   const [sortType, setSortType] = useState("recent");
 
@@ -74,13 +73,17 @@ const HomePage = () => {
   };
 
   return (
-    <div className="m-4">
+    <div className={`m-4`}>
       <Search onSearch={onSearch} />
       {repos?.length > 0 && <SortRepos onSort={onSort} sortType={sortType} />}
       <div className="flex gap-4 flex-col lg:flex-row justify-center items-start">
         {userProfile && !loading && <ProfileInfo userProfile={userProfile} />}
         {!loading && <Repos repos={repos} />}
-        {loading && <Spinner />}
+        {loading && (
+          <div className="flex self-center ">
+            <Spinner />
+          </div>
+        )}
       </div>
     </div>
   );

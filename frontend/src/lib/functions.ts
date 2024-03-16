@@ -1,4 +1,4 @@
-export const apiUrlDB = "https://long-ruby-cod-slip.cyclic.app";
+export const apiUrlDB = "http://localhost:5000";
 export const handleLoginWithSignin = () => {
-  window.open(`https://long-ruby-cod-slip.cyclic.app/api/auth/github`, "_self");
+  window.open(`http://localhost:5000/api/auth/github`, "_self");
 };

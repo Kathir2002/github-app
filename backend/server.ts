@@ -2,7 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import passport from "passport";
 import session from "express-session";
-import cors from "cors";
+import path from "path";
+
 import "./passport/github.auth.ts";
 
 import userRoutes from "./routes/user.route.ts";
@@ -15,12 +16,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const corsOptions = {
-  origin: "https://github-app01.netlify.app",
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
 
 app.use(
   session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
@@ -30,27 +25,17 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://github-app01.netlify.app"
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
-    // Handle preflight request
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
-
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/explore", exploreRoutes);
 
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
+
 app.listen(PORT, () => {
-  console.log(`Server started on port:${PORT}`);
+  console.log(`Server started on http://localhost:${PORT}`);
   connectMongoDB();
 });
