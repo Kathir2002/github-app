@@ -1,5 +1,5 @@
 export async function ensureAuthenticated(req: any, res: any, next: any) {
-  console.log(req.isAuthenticated());
+  console.log(req.session, "++++++++++");
   if (req.isAuthenticated()) {
     return next();
   }
