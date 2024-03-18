@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.3",
     "express-session": "^1.18.0",
+    "memorystore": "^1.6.7",
     "mongoose": "^8.2.1",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12"

@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import passport from "passport";
 import session from "express-session";
 import cors from "cors";
+import memorystore from "memorystore";
+
+const memorystoreSession = memorystore(session);
 
 import "./passport/github.auth.ts";
 
@@ -23,7 +26,15 @@ app.use(
   })
 );
 app.use(
-  session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
+  session({
+    cookie: { maxAge: 86400000 },
+    store: new memorystoreSession({
+      checkPeriod: 86400000,
+    }),
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+  })
 );
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
