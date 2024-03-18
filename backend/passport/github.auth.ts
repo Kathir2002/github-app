@@ -32,6 +32,7 @@ passport.use(
       done: any
     ) {
       const user = await User.findOne({ username: profile.username });
+      console.log(user);
 
       // signup
       if (!user) {
@@ -44,6 +45,8 @@ passport.use(
           likedBy: [],
         });
         await newUser.save();
+        console.log(newUser);
+
         done(null, newUser);
       } else {
         done(null, user);
