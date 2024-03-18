@@ -12,6 +12,7 @@ router.get(
   "/github/callback",
   passport.authenticate("github", {
     failureRedirect: process.env.CLIENT_BASE_URL + "/login",
+    session: true,
   }),
   function (req, res) {
     res.redirect(process.env.CLIENT_BASE_URL as string);
