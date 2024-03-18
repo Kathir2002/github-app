@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import passport from "passport";
 import session from "express-session";
-import path from "path";
 import cors from "cors";
 
 import "./passport/github.auth.ts";
@@ -19,7 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(
   cors({
-    origin: "https://github-app-c7kv.onrender.com",
+    origin: "https://github-app01.netlify.app",
     credentials: true,
   })
 );
@@ -34,15 +33,6 @@ app.use(passport.session());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/explore", exploreRoutes);
-const fileRootPath = path.resolve();
-
-app.use(express.static(path.join(fileRootPath, "/frontend/dist")));
-
-app.get("*", (req, res) => {
-  console.log(req.url);
-
-  res.sendFile(path.join(fileRootPath, "..", "frontend", "dist", "index.html"));
-});
 
 app.listen(PORT, () => {
   console.log(`Server started on PORT:${PORT}`);
