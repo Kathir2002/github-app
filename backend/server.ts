@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     store: mongoStore,
-    cookie: { maxAge: 86400000 },
+    cookie: { maxAge: 86400000, secure: true },
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: false,

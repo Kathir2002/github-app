@@ -5,12 +5,14 @@ import User from "../models/user.model.ts";
 
 dotenv.config();
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function (obj: any, done) {
-  done(null, obj);
+passport.deserializeUser((id: any, done) => {
+  console.log(id, "PASSPORT DESERIALIZE USER ID");
+
+  User.findById(id).then((user) => done(null, user));
 });
 
 // Use the GitHubStrategy within Passport.
@@ -24,6 +26,7 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
       callbackURL:
         "https://github-app-api.onrender.com/api/auth/github/callback",
+      // callbackURL: "http://localhost:5000/api/auth/github/callback",
     },
     async function (
       accessToken: any,
@@ -31,6 +34,8 @@ passport.use(
       profile: any,
       done: any
     ) {
+      console.log(accessToken);
+
       const user = await User.findOne({ username: profile.username });
       // signup
       if (!user) {
@@ -43,7 +48,6 @@ passport.use(
           likedBy: [],
         });
         await newUser.save();
-        console.log(newUser);
 
         done(null, newUser);
       } else {
