@@ -40,6 +40,7 @@ app.use(
     cookie: {
       maxAge: 60 * 1000 * 30, // 30 minutes
       domain: "https://github-app01.netlify.app",
+      secure: true,
     },
 
     store: mongoStore,
