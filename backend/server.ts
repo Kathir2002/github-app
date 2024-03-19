@@ -2,45 +2,25 @@ import express from "express";
 import dotenv from "dotenv";
 import passport from "passport";
 import session from "express-session";
-import cors from "cors";
-import MongoStore from "connect-mongo";
-import cookieParser from "cookie-parser";
+import path from "path";
+
 import "./passport/github.auth.ts";
 
 import userRoutes from "./routes/user.route.ts";
 import exploreRoutes from "./routes/explore.route.ts";
 import authRoutes from "./routes/auth.route.ts";
-dotenv.config();
 
 import { connectMongoDB } from "./db/connectMongoDB.ts";
 
-const mongoStore = new MongoStore({
-  mongoUrl: process.env.MONGO_URI,
-  collectionName: "sessions",
-});
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const dirname = path.resolve();
 
 app.use(
-  cors({
-    origin: "https://github-app01.netlify.app",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  })
+  session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
 );
-app.use(cookieParser("keyboard cat"));
-app.use(express.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: false,
-    store: mongoStore,
-  })
-);
-
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
 app.use(passport.initialize());
@@ -50,7 +30,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/explore", exploreRoutes);
 
+app.use(express.static(path.join(dirname, "/frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(dirname, "frontend", "dist", "index.html"));
+});
+
 app.listen(PORT, () => {
-  console.log(`Server started on PORT:${PORT}`);
+  console.log(`Server started on http://localhost:${PORT}`);
   connectMongoDB();
 });

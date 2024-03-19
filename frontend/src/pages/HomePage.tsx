@@ -10,8 +10,6 @@ import { apiUrlDB } from "../lib/functions";
 import { useAuthContext } from "../context/authContext";
 
 const HomePage = () => {
-  console.log(document.cookie, "----------------");
-
   const [userProfile, setUserProfile] = useState<any>(null);
   const [repos, setRepos] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);

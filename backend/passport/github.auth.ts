@@ -23,8 +23,8 @@ passport.use(
       clientID: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
       callbackURL:
-        "https://github-app-api.onrender.com/api/auth/github/callback",
-      // callbackURL: "http://localhost:5000/api/auth/github/callback",
+        // "https://github-app-api.onrender.com/api/auth/github/callback",
+        "http://localhost:5000/api/auth/github/callback",
     },
     async function (
       accessToken: any,
