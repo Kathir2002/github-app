@@ -34,10 +34,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     store: mongoStore,
-    cookie: { maxAge: 60 * 1000 * 60 * 60, secure: false },
+    rolling: true,
+    // cookie: { maxAge: 60 * 1000 * 60 * 60, secure: false, httpOnly: true },
     secret: "keyboard cat",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
 

@@ -10,11 +10,13 @@ router.get(
 
 router.get(
   "/github/callback",
-  passport.authenticate("github", (req: any, res: any) => {
-    console.log(req?.user, req?.session);
-
+  passport.authenticate("github", {
+    failureRedirect: process.env.CLIENT_BASE_URL + "/login",
+    session: true,
+  }),
+  function (req, res) {
     res.redirect(process.env.CLIENT_BASE_URL as string);
-  })
+  }
 );
 
 router.get("/check", (req, res) => {

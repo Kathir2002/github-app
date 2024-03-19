@@ -34,8 +34,6 @@ passport.use(
       profile: any,
       done: any
     ) {
-      console.log(accessToken);
-
       const user = await User.findOne({ username: profile.username });
       // signup
       if (!user) {
