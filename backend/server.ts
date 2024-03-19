@@ -3,19 +3,21 @@ import dotenv from "dotenv";
 import passport from "passport";
 import session from "express-session";
 import cors from "cors";
-import memorystore from "memorystore";
-
-const memorystoreSession = memorystore(session);
-
+import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
 import "./passport/github.auth.ts";
 
 import userRoutes from "./routes/user.route.ts";
 import exploreRoutes from "./routes/explore.route.ts";
 import authRoutes from "./routes/auth.route.ts";
+dotenv.config();
 
 import { connectMongoDB } from "./db/connectMongoDB.ts";
 
-dotenv.config();
+const mongoStore = new MongoStore({
+  mongoUrl: process.env.MONGO_URI,
+  collectionName: "sessions",
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,15 +25,16 @@ const PORT = process.env.PORT || 5000;
 app.use(
   cors({
     origin: "https://github-app01.netlify.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
+    store: mongoStore,
     cookie: { maxAge: 86400000 },
-    store: new memorystoreSession({
-      checkPeriod: 86400000,
-    }),
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: false,
