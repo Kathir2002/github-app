@@ -40,19 +40,9 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST,PUT, , OPTIONS");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With, content-type, Authorization, Content-Type"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", "*");
-  res.setHeader("Cache-Control", "no-cache ,no-store");
-  // Pass to next layer of middleware
-  next();
-});
 
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
 app.use(passport.initialize());
 app.use(passport.session());
 
