@@ -29,7 +29,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser("{error:err}"));
+app.use(cookieParser("keyboard cat"));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
