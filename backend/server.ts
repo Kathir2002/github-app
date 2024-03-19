@@ -39,7 +39,6 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 1000 * 30, // 30 minutes
-      domain: "https://github-app01.netlify.app",
       secure: true,
     },
 
