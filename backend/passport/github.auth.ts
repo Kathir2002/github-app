@@ -9,10 +9,14 @@ passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((id: any, done) => {
-  console.log(id, "PASSPORT DESERIALIZE USER ID");
-
-  User.findById(id).then((user) => done(null, user));
+passport.deserializeUser((_id, done) => {
+  User.findById(_id, (err: any, user: any) => {
+    if (err) {
+      done({ error: err }, false);
+    } else {
+      done(null, user);
+    }
+  });
 });
 
 // Use the GitHubStrategy within Passport.

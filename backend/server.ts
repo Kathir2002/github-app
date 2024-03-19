@@ -29,18 +29,30 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
+app.use(cookieParser("{error:err}"));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     store: mongoStore,
-    rolling: true,
-    // cookie: { maxAge: 60 * 1000 * 60 * 60, secure: false, httpOnly: true },
-    secret: "keyboard cat",
+    secret: "random string",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: { maxAge: 60 * 60 * 24 * 1000 },
   })
 );
+// app.use(
+//   session({
+//     store: mongoStore,
+//     cookie: {
+//       path: "/",
+//       httpOnly: true,
+//       maxAge: 60 * 1000 * 60 * 60,
+//     },
+//     secret: "keyboard cat",
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
