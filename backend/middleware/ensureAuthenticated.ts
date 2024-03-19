@@ -1,6 +1,10 @@
 export async function ensureAuthenticated(req: any, res: any, next: any) {
-  const { session } = req;
-  console.log(session?.passport?.user, "++++++++++");
+  console.log(
+    req?.session,
+    req?.isAuthenticated(),
+    req?.user,
+    "---------------------------------"
+  );
   if (req.isAuthenticated()) {
     return next();
   }
