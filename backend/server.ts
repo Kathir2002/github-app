@@ -37,11 +37,6 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      maxAge: 60 * 1000 * 30, // 30 minutes
-      secure: true,
-    },
-
     store: mongoStore,
   })
 );
