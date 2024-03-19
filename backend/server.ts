@@ -31,28 +31,15 @@ app.use(
 );
 app.use(cookieParser("{error:err}"));
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
   session({
-    store: mongoStore,
-    secret: "random string",
+    secret: "keyboard cat",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60 * 60 * 24 * 1000 },
+    store: mongoStore,
   })
 );
-// app.use(
-//   session({
-//     store: mongoStore,
-//     cookie: {
-//       path: "/",
-//       httpOnly: true,
-//       maxAge: 60 * 1000 * 60 * 60,
-//     },
-//     secret: "keyboard cat",
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
 
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
