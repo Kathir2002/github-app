@@ -15,6 +15,13 @@ router.get(
     session: true,
   }),
   function (req, res) {
+    console.log(
+      req?.session,
+      req?.isAuthenticated(),
+      req?.user,
+      "+++++++++++++++++++++++++++"
+    );
+
     res.redirect(process.env.CLIENT_BASE_URL as string);
   }
 );

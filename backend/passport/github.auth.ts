@@ -47,6 +47,8 @@ passport.use(
 
         done(null, newUser);
       } else {
+        console.log(user, "INSIDE GITHUB AUTH . TS");
+
         done(null, user);
       }
     }
