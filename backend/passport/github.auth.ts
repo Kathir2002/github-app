@@ -10,13 +10,13 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((_id, done) => {
-  User.findById(_id, (err: any, user: any) => {
-    if (err) {
-      done({ error: err }, false);
-    } else {
+  User.findById(_id)
+    .then((user) => {
       done(null, user);
-    }
-  });
+    })
+    .catch((err) => {
+      done({ error: err }, false);
+    });
 });
 
 // Use the GitHubStrategy within Passport.
