@@ -40,5 +40,3 @@ app.listen(PORT, () => {
   console.log(`Server started on PORT:${PORT}`);
   connectMongoDB();
 });
-
-export default app;
