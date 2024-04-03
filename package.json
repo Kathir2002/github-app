@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon backend/server.ts",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "ts-node backend/server.ts"
+    "start": "ts-node backend/server.ts",
+    "vercel-build": "echo Hai"
   },
   "keywords": [],
   "author": "Kathir Mathvan L",

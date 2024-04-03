@@ -7,5 +7,6 @@
     "strict": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true
-  }
+  },
+  "include": ["./api/*.ts"]
 }
