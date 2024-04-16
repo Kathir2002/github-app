@@ -1,7 +1,7 @@
 import passport from "passport";
 import dotenv from "dotenv";
 import { Strategy as GitHubStrategy } from "passport-github2";
-import User from "../models/user.model.ts";
+import User from "../models/user.model";
 
 dotenv.config();
 
@@ -13,17 +13,12 @@ passport.deserializeUser(function (obj: any, done) {
   done(null, obj);
 });
 
-// Use the GitHubStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and GitHub
-//   profile), and invoke a callback with a user object.
 passport.use(
   new GitHubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-      callbackURL:
-        "https://github-app-q7x7.onrender.com/api/auth/github/callback",
+      callbackURL: "http://localhost:5000/api/auth/github/callback",
     },
     async function (
       accessToken: any,

@@ -30,7 +30,7 @@ class user {
     try {
       const { username } = req?.params;
 
-      const user = await UserModel.findById(req.user._id.toString());
+      const user = await UserModel.findById(req._id.toString());
       const userToLike = await UserModel.findOne({ username: username });
       if (!userToLike) {
         return res?.status(404).json({ message: "No such user found" });
@@ -55,7 +55,7 @@ class user {
 
   async getLikes(req: any, res: any) {
     try {
-      const user = await UserModel.findById(req.user._id.toString());
+      const user = await UserModel.findById(req._id.toString());
       res.status(200).json({ likedBy: user?.likedBy });
     } catch (err: any) {
       res.status(500).json({ message: err?.message });

@@ -11,6 +11,10 @@ import { useAuthContext } from "./context/authContext";
 
 const App = () => {
   const { authUser, loading }: any = useAuthContext();
+  let isLoggedIn = false;
+  if (authUser?.username) {
+    isLoggedIn = true;
+  }
   if (loading) return null;
 
   return (
@@ -21,19 +25,19 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route
             path="/login"
-            element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+            element={!isLoggedIn ? <LoginPage /> : <Navigate to={"/"} />}
           />
           <Route
             path="/signup"
-            element={!authUser ? <SignUpPage /> : <Navigate to={"/"} />}
+            element={!isLoggedIn ? <SignUpPage /> : <Navigate to={"/"} />}
           />
           <Route
             path="/explore"
-            element={authUser ? <ExplorePage /> : <Navigate to={"/login"} />}
+            element={isLoggedIn ? <ExplorePage /> : <Navigate to={"/login"} />}
           />
           <Route
             path="/likes"
-            element={authUser ? <LikesPage /> : <Navigate to={"/login"} />}
+            element={isLoggedIn ? <LikesPage /> : <Navigate to={"/login"} />}
           />
         </Routes>
       </div>

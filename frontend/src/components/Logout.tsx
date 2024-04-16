@@ -12,6 +12,8 @@ const Logout = () => {
       .get(`${apiUrlDB}/api/auth/logout`)
       .then((res) => {
         setAuthUser(null);
+        document.cookie = "token" + "=; Max-Age=-99999999;";
+        document.cookie = "connect.sid" + "=; Max-Age=-99999999;";
         toast.success(res?.data?.message);
       })
       .catch((err) => {

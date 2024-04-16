@@ -1,4 +1,4 @@
-export const apiUrlDB = "https://github-app-q7x7.onrender.com";
+export const apiUrlDB = "http://localhost:5000";
 export const handleLoginWithSignin = () => {
-  window.open(`https://github-app-q7x7.onrender.com/api/auth/github`, "_self");
+  window.open(`http://localhost:5000/api/auth/github`, "_self");
 };

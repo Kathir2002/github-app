@@ -31,7 +31,10 @@ const ExplorePage = () => {
     if (offset == 10) setLoading(true);
     if (limit > 0) setOffset(10);
     await axios
-      .get(`${apiUrlDB}/api/explore/${language}/${limit > 0 ? limit : offset}`)
+      .get(
+        `${apiUrlDB}/api/explore/${language}/${limit > 0 ? limit : offset}`,
+        { withCredentials: true }
+      )
       .then((res) => {
         setRepoLoading(false);
         setRepos(res?.data?.popularRepos);

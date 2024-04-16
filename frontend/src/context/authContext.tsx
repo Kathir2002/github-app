@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }: any) => {
       await fetch(`${apiUrlDB}/api/auth/check`, { credentials: "include" })
         .then(async (res) => {
           const data = await res.json();
-          setAuthUser(data?.user);
+          setAuthUser(data);
           setLoading(false);
         })
         .catch((err) => {
